@@ -13,7 +13,7 @@ CUSTOM_TEMPLATE_DIR = './templates'
 MAIN_TEX = 'main.tex'
 OUTPUT_CELLS_TEX = "./cells"
 OUTPUT_FILTER_CELLS_TEX = "./filtered_cells"
-
+TEMPLATE_TPLX = os.environ.get("TEMPLATE_TPLX")
 def create_main():
     
     # creates `main.tex` which only has macro definition
@@ -38,7 +38,7 @@ def init():
         latex_exporter.template_paths[9]) # Aquí es donde he guardo la template que me ha gustado
     src = os.path.join(tmpl_path, 'classic.tplx') # Nombre de la template
     """
-    src = os.environ.get("TEMPLATE_TPLX")
+    src = TEMPLATE_TPLX
     src = os.path.abspath(src)
     print(src)
     target = CUSTOM_TEMPLATE
@@ -170,6 +170,8 @@ def filter_cells():
 
 
 if __name__ == '__main__':
+    this_dir, _= os.path.split(__file__)
+    TEMPLATE_TPLX = glob.glob("{}/data/**/*.tplx".format(this_dir),recursive=True)[0]
     if len(sys.argv) <= 1:
         print("USAGE: this_script [init|yourfile.ipynb]")
     elif sys.argv[1] == "init":
