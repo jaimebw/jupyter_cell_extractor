@@ -1,3 +1,9 @@
 import os
-this_dir, _ = os.path.split(__file__)
-os.environ["TEMPLATE_TPLX"] = os.path.join(this_dir, "data", "classic.tplx")
+from pathlib import Path
+from .main import cell_extractor
+
+this_dir = Path(__file__)
+TEMPLATE_TPLX = this_dir.parents[0]/"data"/"classic.tplx"
+TREEGUIDE = this_dir.parents[0]/"data"/"treeguide.txt"
+os.environ["TEMPLATE_TPLX"] = str(TEMPLATE_TPLX)
+os.environ["TREEGUIDE"] = str(TREEGUIDE)

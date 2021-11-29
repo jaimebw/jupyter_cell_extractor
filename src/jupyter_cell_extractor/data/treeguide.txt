@@ -1,0 +1,5 @@
+# INSTRUCCTIONS
+1. Add the format.tex to your main.tex doc, before starting the document
+2. Filtered_cells dir contains the cell to be directly pasted inside the document
+3. Images dir contains the image of the cell(it has one)
+ 
