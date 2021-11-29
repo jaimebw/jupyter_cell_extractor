@@ -7,10 +7,9 @@ from pathlib import Path
 
 
 class cell_extractor:
-    def __init__(self,book_path:Path) -> None:
-        
-        self.book_name = book_path
-        self.__valid_book_name()
+    def __init__(self,book_name:str) -> None:
+        self.__valid_book_name(book_name)
+        self.book_name = Path(book_name)
         self.data_folder = Path("cell_data")
         self.TEMPLATE_TPLX = Path(os.environ.get("TEMPLATE_TPLX"))
         self.TREEGUIDE = Path(os.environ.get("TREEGUIDE"))
@@ -28,7 +27,8 @@ class cell_extractor:
         """
         Exports the Jupyter Lab Cells to latex code
         """
-        note = nbformat.read(self.book_name, as_version=4)
+        book_path = self.book_name.resolve()
+        note = nbformat.read(book_path, as_version=4)
         group = self.group_cells(note)
         latex_exporter = LatexExporter()
         self.__export_format()
@@ -73,10 +73,10 @@ class cell_extractor:
                     text = fin.read()
                     fout.write(text)
 
-
-    def __valid_book_name(self)->None:
+    @staticmethod
+    def __valid_book_name(name)->None:
         # checks for valid book path
-        if self.book_name[-6:] != ".ipynb":
+        if name[-6:] != ".ipynb":
             raise ValueError("Not supported file")
 
     
